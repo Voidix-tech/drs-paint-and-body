@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
-const base = process.env.TEST_BASE_URL || 'http://127.0.0.1:3000';
+const base = process.env.TEST_BASE_URL || 'http://localhost:3000';
 const cleanup=[]; let assertions=0;
 const check=(condition,message)=>{assert.ok(condition,message);assertions++;};
 async function request(route,method='GET',body,status=200) { const response=await fetch(`${base}/api/${route}`,{method,headers:body ? {'Content-Type':'application/json'} : undefined,body:body ? JSON.stringify(body) : undefined}); const data=await response.json(); assert.equal(response.status,status,`${method} ${route}: ${JSON.stringify(data)}`); assertions++; return data; }
