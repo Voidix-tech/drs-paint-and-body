@@ -29,8 +29,8 @@ export function Hero() {
       gsap.set(content.current, { autoAlpha: 1 });
       animation.current = gsap.timeline().fromTo(
         Array.from(content.current!.children),
-        { autoAlpha: 0, y: 24 },
-        { autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.14, ease: "power3.out", clearProps: "all" }
+        { autoAlpha: 0, y: 34 },
+        { autoAlpha: 1, y: 0, duration: 1.25, stagger: 0.23, ease: "power2.out", clearProps: "all" }
       );
     };
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {

@@ -20,10 +20,10 @@ export function PublicMotion({ children }: { children: React.ReactNode }) {
       );
       targets.forEach(element => {
         gsap.fromTo(element,
-          { autoAlpha: 0, y: 36 },
+          { autoAlpha: 0, y: 48 },
           {
-            autoAlpha: 1, y: 0, duration: 0.85, ease: "power3.out",
-            scrollTrigger: { trigger: element, start: "top 92%", once: true },
+            autoAlpha: 1, y: 0, duration: 1.3, ease: "power2.out",
+            scrollTrigger: { trigger: element, start: "top 88%", once: true },
             clearProps: "all",
           }
         );

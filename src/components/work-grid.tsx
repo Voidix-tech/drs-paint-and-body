@@ -31,7 +31,7 @@ export function WorkGrid({ items, services, showroom = false }: { items: Work[];
     if (!element || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     gsap.fromTo(element,
       { autoAlpha: 0, y: window.matchMedia("(max-width: 600px)").matches ? 70 : 24, scale: 0.985 },
-      { autoAlpha: 1, y: 0, scale: 1, duration: 0.42, ease: "power3.out", clearProps: "all" }
+      { autoAlpha: 1, y: 0, scale: 1, duration: 0.6, ease: "power2.out", clearProps: "all" }
     );
   }
 
@@ -49,7 +49,7 @@ export function WorkGrid({ items, services, showroom = false }: { items: Work[];
     gsap.to(element, {
       autoAlpha: 0,
       y: window.matchMedia("(max-width: 600px)").matches ? 70 : 16,
-      duration: 0.26,
+      duration: 0.35,
       ease: "power2.in",
       onComplete: finish,
     });
