@@ -2,6 +2,7 @@ import { neon } from "@neondatabase/serverless";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { seedServices, seedWork } from "./seed";
+import { showcaseUpdates, updateLegacyProject } from "./showcase-migration";
 import type { Kind, RecordData, Service, Work } from "./types";
 
 type Row = { id: string; kind: Kind; data: RecordData };
@@ -19,6 +20,7 @@ async function prepare() {
     await sql`CREATE TABLE IF NOT EXISTS drs_content (id TEXT PRIMARY KEY, kind TEXT NOT NULL, data JSONB NOT NULL)`;
     // The sentinel prevents removed seed records from reappearing on restart.
     await sql`WITH first_run AS (INSERT INTO drs_content (id, kind, data) VALUES ('__seed__', 'meta', '{}'::jsonb) ON CONFLICT DO NOTHING RETURNING id) INSERT INTO drs_content (id, kind, data) SELECT item->>'id', item->>'kind', item->'data' FROM jsonb_array_elements(${JSON.stringify(initial)}::jsonb) AS item WHERE EXISTS (SELECT 1 FROM first_run) ON CONFLICT DO NOTHING`;
+    await sql`UPDATE drs_content AS record SET data=record.data || (item->'data') FROM jsonb_array_elements(${JSON.stringify(showcaseUpdates)}::jsonb) AS item WHERE record.kind='work' AND record.id=item->>'id' AND record.data->>'demo'='true' AND NOT (record.data ? 'customerLabel') AND record.data->>'title'=item->>'oldTitle' AND record.data->>'description'=item->>'oldDescription'`;
   })().catch(error => { initialized = undefined; throw error; });
   await initialized;
 }
@@ -30,8 +32,10 @@ async function local<T>(operation: (rows: Row[]) => T, write = false): Promise<T
     let fresh = false;
     try { rows = JSON.parse(await fs.readFile(file, "utf8")); }
     catch (error) { if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error; rows = structuredClone(initial); fresh = true; }
+    let migrated = false;
+    for (const row of rows) if (row.kind === "work") { const updated = updateLegacyProject(row.data as Work); if (updated) { row.data = updated; migrated = true; } }
     const result = operation(rows);
-    if (write || fresh) { const temporary = `${file}.${crypto.randomUUID()}.tmp`; await fs.writeFile(temporary, JSON.stringify(rows), "utf8"); await fs.rename(temporary, file); }
+    if (write || fresh || migrated) { const temporary = `${file}.${crypto.randomUUID()}.tmp`; await fs.writeFile(temporary, JSON.stringify(rows), "utf8"); await fs.rename(temporary, file); }
     return result;
   };
   const task = (globalStore.drsQueue || Promise.resolve()).then(run, run);

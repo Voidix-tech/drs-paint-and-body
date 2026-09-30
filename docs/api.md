@@ -12,7 +12,7 @@ All JSON responses use no-store. No authentication is implemented by request. Ad
 
 Service: `title`, `slug` (unique lowercase path segment), `description`, `visible`, `order`, `type` (`gallery` or `showroom`).
 
-Work: `serviceId`, `title`, `description`, `images` (1 to 8 local URLs), `visible`, `demo`. Optional vehicle fields: `year`, `price` in USD, `mileage`, `availability` (`available` or `sold`). PATCH merges with the current record. IDs are server-generated.
+Work: one customer vehicle project per record. Fields: `serviceId`, `title`, `description`, `images` (1 to 8 local URLs), `visible`, `demo`, optional public `customerLabel` and `vehicle`. Optional showroom fields: `year`, `price` in USD, `mileage`, `availability` (`available` or `sold`). PATCH merges with the current record. IDs are server-generated.
 
 Inquiry: `name`, `phone`, optional `email` (empty string accepted), `serviceId`, `message`. Server adds `id`, ISO UTC `createdAt`, and `status: "new"`. Status updates accept `new` or `contacted`.
 

@@ -21,12 +21,16 @@ Without a URL, the demo saves content in ignored `.demo/content.json`. Local fil
 ## CMS
 
 - Services: add/edit name, description, URL, gallery/showroom type, display order, and visibility. Removing a service also removes its work.
-- Work: upload up to eight photos per item, edit descriptions, hide/show, and remove items. The first image is the cover.
+- Customer projects: each item represents one customer's vehicle and its repair story. Add an optional public customer label and vehicle name, upload one to eight photos, edit descriptions, hide/show, or remove projects. The first image is the cover. There are three illustrative customer projects per repair service.
 - Showroom: the same controls plus year, price, mileage, and availability.
 - Inquiries: view customer contact details, click to call, mark contacted, or delete. No email delivery.
 - Business details stay fixed in `src/lib/types.ts`.
 
 No authentication is included, as requested. The development server binds to loopback. Add authentication before exposing the CMS or customer inquiries publicly. Generated photos, vehicles, prices, and mileage are marked as illustrative demo content. No reviews, opening hours, certifications, warranties, or real inventory claims were invented.
+
+## Cinematic hero
+
+Place the generated intro and optional matching headlights-only idle loop in `public/videos/`. Set `NEXT_PUBLIC_HERO_VIDEO_URL=/videos/hero-intro.mp4` and `NEXT_PUBLIC_HERO_IDLE_VIDEO_URL=/videos/hero-idle.mp4` in `.env.local`, then restart/rebuild. The transformation intro plays once, GSAP reveals the headline and buttons at its end, and the optional idle clip loops. The final intro frame stays visible until the idle clip starts. Reduced-motion visitors get the still photo. The generated video files are still awaiting delivery; the current photo remains the fallback.
 
 ## Verification
 

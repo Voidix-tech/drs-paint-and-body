@@ -1,5 +1,5 @@
 export type Service = { id: string; slug: string; title: string; description: string; visible: boolean; order: number; type: "gallery" | "showroom" };
-export type Work = { id: string; serviceId: string; title: string; description: string; images: string[]; visible: boolean; demo: boolean; year?: number; price?: number; mileage?: number; availability?: "available" | "sold" };
+export type Work = { id: string; serviceId: string; title: string; description: string; images: string[]; visible: boolean; demo: boolean; customerLabel?: string; vehicle?: string; year?: number; price?: number; mileage?: number; availability?: "available" | "sold" };
 export type Inquiry = { id: string; name: string; phone: string; email: string; serviceId: string; message: string; status: "new" | "contacted"; createdAt: string };
 export type Kind = "service" | "work" | "inquiry" | "media";
 export type RecordData = Service | Work | Inquiry | { id: string; mime: string; base64: string };
