@@ -29,7 +29,7 @@ svg { flex-shrink:0; stroke-width:1.7; }
 .secondary:hover { background:#26272b; border-color:#b4b4b8; }
 .text-link { display:inline-flex; align-items:center; gap:20px; font-weight:600; font-size:16px; border-bottom:1px solid #636469; padding-bottom:8px; }
 .text-link:hover { color:#ff7278; }
-.site-header { height:82px; position:sticky; top:0; z-index:30; background:#111214f5; border-bottom:1px solid #ffffff12; backdrop-filter:blur(14px); }
+.site-header { height:82px; position:sticky; top:0; z-index:30; background:#000; border-bottom:1px solid #ffffff12; }
 .header-inner { height:100%; display:flex; align-items:center; justify-content:space-between; gap:30px; }
 .brand { display:flex; align-items:center; gap:12px; flex-shrink:0; }
 .brand img { object-fit:contain; height:65px; width:65px; }
@@ -44,6 +44,9 @@ svg { flex-shrink:0; stroke-width:1.7; }
 .menu-button,.mobile-phone { display:none!important; }
 .hero { height:min(730px,calc(100svh - 82px)); min-height:560px; position:relative; overflow:hidden; }
 .hero-photo { object-fit:cover; object-position:center; }
+.hero-video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; }
+.hero-video[hidden] { display:none; }
+@media(max-width:600px) { .hero-video { object-position:66% center; } }
 .hero-shade { position:absolute; inset:0; background:linear-gradient(90deg,#0b0c0ee8 0%,#0b0c0eaa 29%,#0b0c0e19 65%),linear-gradient(0deg,#11121499,transparent 28%); }
 .hero-content { position:relative; padding-top:80px; }
 .eyebrow { color:#e2e2e5; letter-spacing:3px; font-size:12px; font-weight:600; margin-bottom:20px; }
@@ -53,6 +56,10 @@ svg { flex-shrink:0; stroke-width:1.7; }
 .hero-actions { display:flex; align-items:center; gap:30px; margin-top:32px; }
 .hero-service-link { display:flex; align-items:center; gap:16px; font-size:15px; }
 .hero-caption { position:absolute; right:30px; bottom:22px; font-size:11px; color:#d4d4d9; }
+.skip-intro { position:absolute; left:30px; bottom:22px; z-index:2; padding:8px 12px; font-size:12px; background:#000b!important; border:1px solid #777!important; }
+.customer-projects .work-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+@media(max-width:850px) { .customer-projects .work-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:600px) { .customer-projects .work-grid { grid-template-columns:1fr; } }
 .location-strip { border-bottom:1px solid var(--line); background:#191a1c; }
 .location-strip>.container { display:flex; justify-content:space-between; align-items:center; gap:20px; min-height:64px; font-size:13px; color:#c4c5ca; }
 .location-strip span,.location-strip a { display:flex; align-items:center; gap:9px; }
@@ -147,7 +154,9 @@ footer { border-top:1px solid var(--line); padding-top:58px; }
 .error-page { min-height:70dvh; }
 .error-page h1 { font:700 56px/1 var(--font-display); margin-bottom:22px; }
 .error-page p { margin-bottom:30px; color:var(--muted); }
-dialog { padding:0; color:var(--white); background:#1a1b1e; border:1px solid #4a4b50; box-shadow:0 20px 100px #0008; }
+/* Tailwind's reset removes the native dialog margins; restore viewport centering. */
+dialog { position:fixed; inset:0; margin:auto; padding:0; overflow:auto; color:var(--white); background:#1a1b1e; border:1px solid #4a4b50; box-shadow:0 20px 100px #0008; }
+html:has(dialog[open]) { overflow:hidden; }
 dialog::backdrop { background:#08090ce5; }
 .gallery-dialog { width:min(1000px,calc(100% - 32px)); max-height:90dvh; }
 .gallery-dialog-content { position:relative; }
@@ -160,6 +169,8 @@ dialog::backdrop { background:#08090ce5; }
 .gallery-description { padding:28px; }
 .gallery-description h2 { font:600 38px/1.1 var(--font-display); }
 .gallery-description>p { margin-top:12px; color:var(--muted); }
+.project-meta { color:#d0d1d8!important; font-size:13px!important; }
+.navigation.is-open { background:#000; }
 .gallery-description .button { margin-top:23px; }
 /* CMS: the same palette, with compact typography and straightforward controls. */
 .admin-app { min-height:100dvh; display:grid; grid-template-columns:255px minmax(0,1fr); }
