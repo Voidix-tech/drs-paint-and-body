@@ -1,0 +1,79 @@
+{
+  "tool": "built-in image_gen",
+  "use": "Illustrative demo photos. Three per service.",
+  "common": "Photorealistic natural automotive service photography, landscape 3:2, natural US repair-shop aesthetic, no typography, watermark, or identifiable business signage.",
+  "assets": [
+    {
+      "file": "public/images/autobody-1.webp",
+      "prompt": "Restored burgundy sports coupe in dark garage, right-side composition for hero"
+    },
+    {
+      "file": "public/images/autobody-2.webp",
+      "prompt": "A technician's gloved hands carefully smoothing a sanded gray car door panel in an authentic body shop, medium close up, natural workshop lighting."
+    },
+    {
+      "file": "public/images/autobody-3.webp",
+      "prompt": "A freshly restored silver classic American coupe viewed from the rear three quarter inside a clean neighborhood auto body workshop, polished metal and precise panels."
+    },
+    {
+      "file": "public/images/collision-1.webp",
+      "prompt": "A metallic gray sedan with a freshly fitted front bumper and headlight in a body repair bay, three quarter front view, realistic workshop."
+    },
+    {
+      "file": "public/images/collision-2.webp",
+      "prompt": "Collision repair in progress on a blue sedan, front bumper removed, an adult mechanic in dark workwear checking an undamaged support assembly, authentic safe workshop practice."
+    },
+    {
+      "file": "public/images/collision-3.webp",
+      "prompt": "A repaired white SUV parked outside a modest auto body shop in coastal Virginia, late afternoon natural light, no signage."
+    },
+    {
+      "file": "public/images/painting-1.webp",
+      "prompt": "A red coupe being refinished inside an enclosed professional paint booth, adult technician wearing appropriate full respirator and protective coveralls using a spray gun, realistic overspray ventilation."
+    },
+    {
+      "file": "public/images/painting-2.webp",
+      "prompt": "Close view of the beautifully refinished deep blue rear fender of a modern sedan, gleaming smooth paint and silver reflections in an auto painting shop."
+    },
+    {
+      "file": "public/images/painting-3.webp",
+      "prompt": "Gloved hands polishing a glossy charcoal gray car hood with a professional orbital polisher in an authentic detailing bay, natural lighting."
+    },
+    {
+      "file": "public/images/repair-1.webp",
+      "prompt": "An adult mechanic in dark workwear inspecting a modern car engine under an open hood in an authentic repair garage, candid photograph, no text."
+    },
+    {
+      "file": "public/images/repair-2.webp",
+      "prompt": "Close up of a clean brake rotor and caliper on a raised vehicle with wheel removed in a professional garage, gloved hand inspecting brake assembly, technically plausible."
+    },
+    {
+      "file": "public/images/repair-3.webp",
+      "prompt": "Silver sedan securely raised on a professional two post vehicle lift in a realistic spacious auto workshop, wide view, natural lighting."
+    },
+    {
+      "file": "public/images/lift-1.webp",
+      "prompt": "Accessible white minivan parked with side door open and a realistic powered wheelchair lift platform lowered to pavement, empty lift with safety rails, Virginia neighborhood, daylight."
+    },
+    {
+      "file": "public/images/lift-2.webp",
+      "prompt": "Adult technician examining the hinge and electric actuator of a vehicle wheelchair lift in a repair workshop, realistic accessible van lift mechanism, close view, no people on lift."
+    },
+    {
+      "file": "public/images/lift-3.webp",
+      "prompt": "Rear wheelchair lift of an accessible passenger van with a flat metal platform and foldable safety rails lowered to pavement, parked outdoors, realistic engineering, no wheelchair user."
+    },
+    {
+      "file": "public/images/sales-1.webp",
+      "prompt": "2018 Chevrolet Camaro coupe in graphite gray parked outside on a clean asphalt lot in coastal Virginia, three quarter front catalog view, natural soft daylight, no license text."
+    },
+    {
+      "file": "public/images/sales-2.webp",
+      "prompt": "2020 Toyota Camry sedan in pearl white parked on a clean small dealership lot in coastal Virginia, three quarter front catalog view, soft daylight, no signage or readable plates."
+    },
+    {
+      "file": "public/images/sales-3.webp",
+      "prompt": "2019 Ford F-150 crew cab pickup in silver parked on a clean small dealership lot in coastal Virginia, three quarter front catalog view, natural soft daylight, no signage or readable plates."
+    }
+  ]
+}
