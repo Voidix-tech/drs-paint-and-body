@@ -1,36 +1,33 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { usePathname } from "next/navigation";
-
-gsap.registerPlugin(ScrollTrigger);
 
 export function PublicMotion({ children }: { children: React.ReactNode }) {
   const root = useRef<HTMLElement>(null);
   const pathname = usePathname();
 
   useEffect(() => {
-    if (!root.current || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const context = gsap.context(() => {
-      const targets = gsap.utils.toArray<HTMLElement>(
-        ".section-heading, .service-tile, .work-card, .showroom-feature, .contact-copy, .contact-form, .page-intro h1, .page-intro>p:last-child, .service-gallery-grid>article, .gallery-section .work-card",
-        root.current
-      );
-      targets.forEach(element => {
-        gsap.fromTo(element,
-          { autoAlpha: 0, y: 48 },
-          {
-            autoAlpha: 1, y: 0, duration: 1.3, ease: "power2.out",
-            scrollTrigger: { trigger: element, start: "top 88%", once: true },
-            clearProps: "all",
-          }
-        );
+    if (!root.current) return;
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (media.matches) return;
+    const animations: Animation[] = [];
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        if (!media.matches) animations.push(entry.target.animate(
+          [{ opacity: 0.7, transform: "translateY(14px)" }, { opacity: 1, transform: "none" }],
+          { duration: 450, easing: "cubic-bezier(.2,.7,.2,1)" },
+        ));
+        observer.unobserve(entry.target);
       });
-    }, root);
-    ScrollTrigger.refresh();
-    return () => context.revert();
+    }, { threshold: 0.05 });
+    root.current.querySelectorAll(".section-heading, .service-tile, .work-card, .contact-form, .service-gallery-grid > article").forEach(element => observer.observe(element));
+    const reduce = () => {
+      if (media.matches) { observer.disconnect(); animations.forEach(animation => animation.cancel()); }
+    };
+    media.addEventListener("change", reduce);
+    return () => { observer.disconnect(); animations.forEach(animation => animation.cancel()); media.removeEventListener("change", reduce); };
   }, [pathname]);
 
   return <main id="main" ref={root}>{children}</main>;

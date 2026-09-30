@@ -239,7 +239,7 @@ export function Admin() {
       <Toaster theme="dark" position="bottom-right" closeButton />
       <AdminSidebar>
         <Link className="admin-brand" href="/">
-          <img src="/images/logo.png" alt="DRS" width="48" height="48" />
+          <img src="/images/logo-white-edge.webp" alt="DRS" width="48" height="48" />
           <span>
             DR’S PAINT & BODY<small>Content manager</small>
           </span>

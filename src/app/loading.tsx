@@ -1,1 +1,7 @@
-export default function Loading() { return <div className="container section space-y-8" aria-label="Loading page"><div className="skeleton h-16 w-2/3"/><div className="skeleton h-64"/></div>; }
+export default function Loading() {
+  return <div className="container page-loading" role="status" aria-label="Loading page">
+    <div className="skeleton loading-title" /><div className="skeleton loading-subtitle" />
+    <div className="loading-grid"><div className="skeleton loading-card" /><div className="skeleton loading-card" /><div className="skeleton loading-card" /></div>
+    <span className="sr-only">Loading page</span>
+  </div>;
+}
