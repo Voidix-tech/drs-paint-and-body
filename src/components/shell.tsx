@@ -83,7 +83,7 @@ export function Header({ services }: { services: Service[] }) {
   }
 
   return <>
-    <header className="site-header">
+    <header className={pathname === "/" ? "site-header site-header-home" : "site-header"}>
       <div className="container header-inner">
         <Link href="/" className="brand" aria-label="DR's Paint and Body home" onClick={() => navigate("/")}>
           <Image src="/images/logo-white-edge.webp" alt="DRS Paint Body and Repairs" width={64} height={64} />

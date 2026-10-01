@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Hero } from "@/components/hero";
-import { IconArrowUpRight, IconMapPin, IconPhone, IconArrowRight } from "@tabler/icons-react";
+import { IconArrowUpRight, IconMapPin, IconPhone, IconArrowRight, IconTools } from "@tabler/icons-react";
 import { getPublicContent as publicContent } from "@/lib/public-content";
 import { BUSINESS } from "@/lib/types";
 import { Contact } from "@/components/contact";
@@ -17,9 +17,9 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
   return <>
     <Hero />
     <div className="location-strip"><div className="container">
-      <a href={BUSINESS.directions} target="_blank" rel="noreferrer"><IconMapPin size={20} /><span><strong>Right here in Suffolk</strong><small>220 Jackson St, Suffolk, VA</small></span><IconArrowUpRight size={18} /></a>
-      <p>Paint. Bodywork. Repairs.<br /><strong>One local shop.</strong></p>
-      <a href={`tel:${BUSINESS.tel}`}><IconPhone size={20} /><span><small>Let’s talk about your vehicle</small><strong>{BUSINESS.phone}</strong></span><IconArrowUpRight size={18} /></a>
+      <a className="location-strip-item" href={BUSINESS.directions} target="_blank" rel="noreferrer"><span className="location-strip-icon" aria-hidden="true"><IconMapPin size={32} /></span><span><small>Right here in Suffolk</small><strong>220 Jackson St, Suffolk, VA</strong></span></a>
+      <div className="location-strip-item"><span className="location-strip-icon" aria-hidden="true"><IconTools size={32} /></span><span><small>Paint. Bodywork. Repairs.</small><strong>One local shop.</strong></span></div>
+      <a className="location-strip-item" href={`tel:${BUSINESS.tel}`}><span className="location-strip-icon" aria-hidden="true"><IconPhone size={32} /></span><span><small>Let’s talk about your vehicle</small><strong>{BUSINESS.phone}</strong></span></a>
     </div></div>
     <section className="section services-section"><div className="container">
       <div className="section-heading"><h2>A little damage.<br />A lot of possibilities.</h2><p>Find the right help for your vehicle, all in one place.</p></div>

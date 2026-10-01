@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { IconArrowUpRight, IconArrowRight } from "@tabler/icons-react";
+import { IconArrowRight } from "@tabler/icons-react";
 
 export function Hero() {
   return <section className="hero hero-noir" aria-labelledby="hero-title">
@@ -12,11 +12,10 @@ export function Hero() {
         <h1 id="hero-title">YOUR CAR.<br /><span>BACK IN FORM.</span></h1>
         <p className="hero-noir-description">Bodywork, paint, and repairs from your local Suffolk shop. Tell us what your vehicle needs.</p>
         <div className="hero-noir-actions">
-          <a href="#contact" className="button primary">Request a callback<IconArrowUpRight size={19} /></a>
-          <Link href="/services" className="hero-noir-secondary">Explore services<IconArrowRight size={19} /></Link>
+          <a href="#contact" className="button primary"><span>Request a callback</span><IconArrowRight size={26} aria-hidden="true" /></a>
+          <Link href="/services" className="button hero-noir-secondary"><span>Explore services</span><IconArrowRight size={26} aria-hidden="true" /></Link>
         </div>
       </div>
     </div>
-    <p className="hero-noir-caption">Illustrative garage imagery</p>
   </section>;
 }
