@@ -1,18 +1,178 @@
 import type { Service, Work } from "./types";
-export const seedServices: Service[] = ([
-  { id: "autobody", slug: "autobody", title: "Autobody", description: "Dents, damaged panels, and bodywork brought back into shape. Tell us what happened and we'll talk through the next step.", visible: true, order: 0 },
-  { id: "collision", slug: "collision-repair", title: "Collision repair", description: "From damaged bumpers to body repairs after a collision, get help bringing your vehicle back to the road.", visible: true, order: 1 },
-  { id: "painting", slug: "painting", title: "Painting", description: "Fresh paint, panel refinishing, and finishing touches. Let's talk about the color and finish you have in mind.", visible: true, order: 2 },
-  { id: "repair", slug: "auto-repair", title: "Auto repair", description: "When something doesn't feel right, start with a conversation. Contact the shop about your vehicle and the repair you need.", visible: true, order: 3 },
-  { id: "lift", slug: "wheelchair-lift-repair", title: "Wheelchair lift repair", description: "Discuss repairs for your vehicle's wheelchair lift. Call with your lift model and the issue so we can confirm how we can help.", visible: true, order: 4 },
-  { id: "sales", slug: "car-sales", title: "Car sales", description: "Explore the virtual showroom and get in touch about a vehicle. Contact the shop to confirm availability and details.", visible: true, order: 5 }
-] as Omit<Service, "type">[]).map(service => ({ ...service, type: service.id === "sales" ? "showroom" : "gallery" }));
+export const seedServices: Service[] = (
+  [
+    {
+      id: "autobody",
+      slug: "autobody",
+      title: "Autobody",
+      description:
+        "Dents, damaged panels, and bodywork brought back into shape. Tell us what happened and we'll talk through the next step.",
+      visible: true,
+      order: 0,
+    },
+    {
+      id: "collision",
+      slug: "collision-repair",
+      title: "Collision repair",
+      description:
+        "From damaged bumpers to body repairs after a collision, get help bringing your vehicle back to the road.",
+      visible: true,
+      order: 1,
+    },
+    {
+      id: "painting",
+      slug: "painting",
+      title: "Painting",
+      description:
+        "Fresh paint, panel refinishing, and finishing touches. Let's talk about the color and finish you have in mind.",
+      visible: true,
+      order: 2,
+    },
+    {
+      id: "repair",
+      slug: "auto-repair",
+      title: "Auto repair",
+      description:
+        "When something doesn't feel right, start with a conversation. Contact the shop about your vehicle and the repair you need.",
+      visible: true,
+      order: 3,
+    },
+    {
+      id: "lift",
+      slug: "wheelchair-lift-repair",
+      title: "Wheelchair lift repair",
+      description:
+        "Discuss repairs for your vehicle's wheelchair lift. Call with your lift model and the issue so we can confirm how we can help.",
+      visible: true,
+      order: 4,
+    },
+    {
+      id: "sales",
+      slug: "car-sales",
+      title: "Car sales",
+      description:
+        "Explore the virtual showroom and get in touch about a vehicle. Contact the shop to confirm availability and details.",
+      visible: true,
+      order: 5,
+    },
+  ] as Omit<Service, "type">[]
+).map((service) => ({
+  ...service,
+  type: service.id === "sales" ? "showroom" : "gallery",
+}));
 const samples: Record<string, [string, string][]> = {
-  autobody: [["Burgundy coupe restoration", "Demo customer project: restored bodywork on a burgundy sports coupe. Add one or more photos to show this vehicle's repair story."], ["Sedan door restoration", "Demo customer project: restoring a damaged sedan door. Photos can show the condition, work in progress, and completed repair."], ["Classic coupe bodywork", "Demo customer project: bodywork and finishing on a silver classic coupe."]],
-  collision: [["Gray sedan collision repair", "Demo customer project: front bumper and panel repair on a gray sedan."], ["Blue sedan front-end repair", "Demo customer project: a blue sedan during collision repair. This project's gallery can include any number of stages."], ["White SUV collision repair", "Demo customer project: a white SUV after body repairs and finishing."]],
-  painting: [["Red coupe refinishing", "Demo customer project: refinishing a red coupe in the paint booth."], ["Blue sedan paintwork", "Demo customer project: a fresh blue finish on a customer's sedan."], ["Charcoal sedan finishing", "Demo customer project: final polishing and finishing on a charcoal sedan."]],
-  repair: [["Customer sedan engine inspection", "Demo customer project: investigating an issue under the hood."], ["Customer vehicle brake service", "Demo customer project: brake inspection and servicing."], ["Silver sedan inspection", "Demo customer project: vehicle inspection on a workshop lift."]],
-  lift: [["White minivan lift project", "Demo customer project: an accessible minivan's side lift."], ["Passenger van lift repair", "Demo customer project: inspecting and repairing a van's lift mechanism."], ["Rear-entry van lift project", "Demo customer project: an accessible van with a rear-entry wheelchair lift."]],
-  sales: [["2018 Chevrolet Camaro", "An illustrative coupe listing for this demo. Not actual inventory."], ["2020 Toyota Camry", "An illustrative sedan listing for this demo. Not actual inventory."], ["2019 Ford F-150", "An illustrative pickup listing for this demo. Not actual inventory."]]
+  autobody: [
+    [
+      "Burgundy coupe restoration",
+      "Demo customer project: restored bodywork on a burgundy sports coupe. Add one or more photos to show this vehicle's repair story.",
+    ],
+    [
+      "Sedan door restoration",
+      "Demo customer project: restoring a damaged sedan door. Photos can show the condition, work in progress, and completed repair.",
+    ],
+    [
+      "Classic coupe bodywork",
+      "Demo customer project: bodywork and finishing on a silver classic coupe.",
+    ],
+  ],
+  collision: [
+    [
+      "Gray sedan collision repair",
+      "Demo customer project: front bumper and panel repair on a gray sedan.",
+    ],
+    [
+      "Blue sedan front-end repair",
+      "Demo customer project: a blue sedan during collision repair. This project's gallery can include any number of stages.",
+    ],
+    [
+      "White SUV collision repair",
+      "Demo customer project: a white SUV after body repairs and finishing.",
+    ],
+  ],
+  painting: [
+    [
+      "Red coupe refinishing",
+      "Demo customer project: refinishing a red coupe in the paint booth.",
+    ],
+    [
+      "Blue sedan paintwork",
+      "Demo customer project: a fresh blue finish on a customer's sedan.",
+    ],
+    [
+      "Charcoal sedan finishing",
+      "Demo customer project: final polishing and finishing on a charcoal sedan.",
+    ],
+  ],
+  repair: [
+    [
+      "Customer sedan engine inspection",
+      "Demo customer project: investigating an issue under the hood.",
+    ],
+    [
+      "Customer vehicle brake service",
+      "Demo customer project: brake inspection and servicing.",
+    ],
+    [
+      "Silver sedan inspection",
+      "Demo customer project: vehicle inspection on a workshop lift.",
+    ],
+  ],
+  lift: [
+    [
+      "White minivan lift project",
+      "Demo customer project: an accessible minivan's side lift.",
+    ],
+    [
+      "Passenger van lift repair",
+      "Demo customer project: inspecting and repairing a van's lift mechanism.",
+    ],
+    [
+      "Rear-entry van lift project",
+      "Demo customer project: an accessible van with a rear-entry wheelchair lift.",
+    ],
+  ],
+  sales: [
+    [
+      "2018 Chevrolet Camaro",
+      "An illustrative coupe listing for this demo. Not actual inventory.",
+    ],
+    [
+      "2020 Toyota Camry",
+      "An illustrative sedan listing for this demo. Not actual inventory.",
+    ],
+    [
+      "2019 Ford F-150",
+      "An illustrative pickup listing for this demo. Not actual inventory.",
+    ],
+  ],
 };
-export const seedWork: Work[] = seedServices.flatMap(service => samples[service.id].map(([title, description], index) => ({ id: `${service.id}-${index + 1}`, serviceId: service.id, title, description, images: [`/images/${service.id}-${index + 1}.webp`], visible: true, demo: true, ...(service.id === "sales" ? { year: [2018,2020,2019][index], price: [22900,18900,26500][index], mileage: [68400,51200,82300][index], availability: "available" as const } : { customerLabel: `Demo customer ${String(index + 1).padStart(2, "0")}`, vehicle: title }) })));
+const showroomImages = [
+  "/images/showroom-sunset.webp",
+  "/images/showroom-camry-sunset.webp",
+  "/images/showroom-ford-sunset.webp",
+];
+export const seedWork: Work[] = seedServices.flatMap((service) =>
+  samples[service.id].map(([title, description], index) => ({
+    id: `${service.id}-${index + 1}`,
+    serviceId: service.id,
+    title,
+    description,
+    images:
+      service.id === "sales"
+        ? [showroomImages[index]]
+        : [`/images/${service.id}-${index + 1}.webp`],
+    visible: true,
+    demo: true,
+    ...(service.id === "sales"
+      ? {
+          year: [2018, 2020, 2019][index],
+          price: [22900, 18900, 26500][index],
+          mileage: [68400, 51200, 82300][index],
+          availability: "available" as const,
+        }
+      : {
+          customerLabel: `Demo customer ${String(index + 1).padStart(2, "0")}`,
+          vehicle: title,
+        }),
+  })),
+);
