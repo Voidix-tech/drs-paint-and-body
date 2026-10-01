@@ -5,10 +5,12 @@ import gsap from "gsap";
 import { IconArrowUpRight, IconX, IconChevronLeft, IconChevronRight, IconSearch } from "@tabler/icons-react";
 import type { Work, Service } from "@/lib/types";
 import { InquiryForm } from "./contact";
+import Link from "next/link";
+import { OverlapCarousel } from "./overlap-carousel";
 
 export const money = (value?: number) => value === undefined ? "Ask for price" : new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(value);
 
-export function WorkGrid({ items, services, showroom = false }: { items: Work[]; services: Service[]; showroom?: boolean }) {
+export function WorkGrid({ items, services, showroom = false, carousel = false }: { items: Work[]; services: Service[]; showroom?: boolean; carousel?: boolean }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const inquiryDialog = useRef<HTMLDialogElement>(null);
   const photo = useRef<HTMLImageElement>(null);
@@ -22,6 +24,26 @@ export function WorkGrid({ items, services, showroom = false }: { items: Work[];
     (availability === "all" || (item.availability || "available") === availability) &&
     `${item.title} ${item.vehicle || ""} ${item.description}`.toLowerCase().includes(search.trim().toLowerCase())
   ) : items;
+  const projectCards = visibleItems.map((item, position) => ({
+    id: String(item.id),
+    title: item.title,
+    content: <article key={item.id} className={carousel ? "work-card work-carousel-card" : "work-card"}>
+      <button className="image-button" onClick={() => open(item)} aria-label={`View ${item.title}`}>
+        <img src={item.images[0]} alt={item.title} loading="lazy" width="900" height="600" />
+        {!carousel && <span className="image-arrow"><IconArrowUpRight size={23} /></span>}
+      </button>
+      <div className="work-card-info">
+        {carousel && <span className="work-card-index"><span aria-hidden="true" />{String(position + 1).padStart(2, "0")}</span>}
+        {showroom && <p className="vehicle-meta"><span className={item.availability === "sold" ? "availability sold" : "availability"}>{item.availability === "sold" ? "Sold" : "Available"}</span>{item.mileage !== undefined && <span>{item.mileage.toLocaleString("en-US")} miles</span>}</p>}
+        <h3><button onClick={() => open(item)}>{item.title}</button></h3>
+        {showroom ? <p className="vehicle-price">{money(item.price)}</p> : <p>{services.find(service => service.id === item.serviceId)?.title}</p>}
+        {carousel && <p className="work-card-description">{item.description.split(".")[0]}.</p>}
+        {!showroom && !carousel && item.customerLabel && <p className="project-meta">{item.customerLabel}</p>}
+        {item.demo && <p className="demo-label">{showroom ? "Demo listing, not actual inventory" : "Illustrative demo photo"}</p>}
+        {carousel && <button type="button" className="work-card-arrow" onClick={() => open(item)} aria-label={`Open ${item.title} gallery`}><IconArrowUpRight size={22} aria-hidden="true" /></button>}
+      </div>
+    </article>,
+  }));
 
   useEffect(() => {
     if (selected) dialog.current?.querySelector<HTMLButtonElement>(".dialog-close")?.focus();
@@ -118,21 +140,10 @@ export function WorkGrid({ items, services, showroom = false }: { items: Work[];
       </div>
       <label className="showroom-search"><IconSearch size={18} /><span className="sr-only">Search vehicles</span><input type="search" value={search} onChange={event => setSearch(event.target.value)} placeholder="Search vehicles" /></label>
     </div>}
-    <div className={showroom ? "work-grid vehicle-grid" : "work-grid"}>
-      {visibleItems.map(item => <article key={item.id} className="work-card">
-        <button className="image-button" onClick={() => open(item)} aria-label={`View ${item.title}`}>
-          <img src={item.images[0]} alt={item.title} loading="lazy" width="900" height="600" />
-          <span className="image-arrow"><IconArrowUpRight size={23} /></span>
-        </button>
-        <div className="work-card-info">
-          {showroom && <p className="vehicle-meta"><span className={item.availability === "sold" ? "availability sold" : "availability"}>{item.availability === "sold" ? "Sold" : "Available"}</span>{item.mileage !== undefined && <span>{item.mileage.toLocaleString("en-US")} miles</span>}</p>}
-          <h3><button onClick={() => open(item)}>{item.title}</button></h3>
-          {showroom ? <p className="vehicle-price">{money(item.price)}</p> : <p>{services.find(service => service.id === item.serviceId)?.title}</p>}
-          {!showroom && item.customerLabel && <p className="project-meta">{item.customerLabel}</p>}
-          {item.demo && <p className="demo-label">{showroom ? "Demo listing, not actual inventory" : "Illustrative demo photo"}</p>}
-        </div>
-      </article>)}
-    </div>
+    {carousel && !showroom
+      ? <OverlapCarousel label="Project galleries" variant="projects" initialIndex={Math.min(1, projectCards.length - 1)} slides={projectCards}
+          footerStart={<Link href="/services" className="text-link work-carousel-more">Explore all services<IconArrowUpRight size={18} aria-hidden="true" /></Link>} />
+      : <div className={showroom ? "work-grid vehicle-grid" : "work-grid"}>{projectCards.map(card => card.content)}</div>}
     {items.length === 0 && <div className="empty-state"><h3>{showroom ? "More vehicles coming soon." : "More work coming soon."}</h3><p>Contact the shop to discuss {showroom ? "current availability" : "your vehicle"}.</p></div>}
     {showroom && items.length > 0 && visibleItems.length === 0 && <div className="empty-state"><h3>No vehicles match your search.</h3><p>Try a different vehicle name or show all vehicles.</p><button type="button" className="button secondary" onClick={() => { setSearch(""); setAvailability("all"); }}>Clear filters</button></div>}
     {showroom && items.length > 0 && <p className="showroom-results" role="status">{visibleItems.length} of {items.length} vehicles shown</p>}

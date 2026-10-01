@@ -5,6 +5,7 @@ import { getPublicContent as publicContent } from "@/lib/public-content";
 import { BUSINESS } from "@/lib/types";
 import { Contact } from "@/components/contact";
 import { WorkGrid } from "@/components/work-grid";
+import { OverlapCarousel } from "@/components/overlap-carousel";
 
 export const dynamic = "force-dynamic";
 
@@ -30,10 +31,10 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
           <p className="services-description">From minor repairs to fresh paint, we’re here to help get your vehicle back on the road.</p>
           <Link href="/services" className="button services-button">Explore all services<IconArrowRight size={19} aria-hidden="true" /></Link>
         </div>
-        {services.map((service, index) => {
+        <OverlapCarousel label="Services" variant="services" slides={services.map((service, index) => {
         const photo = service.coverImage || work.find(w => w.serviceId === service.id)?.images[0];
         const bannerPhoto = service.type === "showroom" && photo === "/images/sales-1.webp" ? "/images/hero-corvette.webp" : photo;
-        return <Link className={`service-tile${service.slug === "wheelchair-lift-repair" ? " service-tile-reverse" : ""}`} data-service={service.slug} key={service.id} href={`/services/${service.slug}`}>
+        return { id: String(service.id), title: service.title, content: <Link className={`service-tile${service.slug === "wheelchair-lift-repair" ? " service-tile-reverse" : ""}`} data-service={service.slug} href={`/services/${service.slug}`}>
           <div className="service-tile-photo">{bannerPhoto && <img src={bannerPhoto} alt="" loading="lazy" width="1600" height="900" />}</div>
           <div className="service-tile-copy">
             <span className="service-number">{String(index + 1).padStart(2, "0")}</span>
@@ -41,14 +42,13 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
             <p>{service.description.split(".")[0]}.</p>
             <div className="service-tile-footer"><span className="service-tile-link">{service.type === "showroom" ? "Browse vehicles" : "Explore service"}<IconArrowRight size={16} aria-hidden="true" /></span><span className="service-tile-arrow" aria-hidden="true"><IconArrowUpRight size={21} /></span></div>
           </div>
-        </Link>;
-      })}</div>
+        </Link> };
+      })} /></div>
       {services.length === 0 && <div className="empty-state"><h3>Start with a conversation.</h3><p>Call {BUSINESS.phone} to ask about your vehicle.</p></div>}
     </div></section>
-    <section className="section work-section"><div className="container">
-      <div className="section-heading"><h2>Every vehicle has a story.</h2><p>Take a closer look at the bodywork, paint, and repairs in our project galleries.</p></div>
-      <WorkGrid items={repairWork.slice(0, 3)} services={services} />
-      <Link href="/services" className="text-link section-more">Explore all services<IconArrowUpRight size={18} /></Link>
+    <section id="work" className="section work-section" aria-labelledby="work-title"><div className="container">
+      <div className="work-heading"><p className="eyebrow work-eyebrow">Project galleries</p><h2 id="work-title">Every vehicle<br /><span>has a story<span className="services-period">.</span></span></h2><p>Take a closer look at the bodywork, paint, and repairs in our project galleries.</p></div>
+      <WorkGrid items={repairWork.slice(0, 3)} services={services} carousel />
     </div></section>
     <section className="section process-section"><div className="container process-layout">
       <div className="section-heading"><h2>Let’s take the<br />next step together.</h2><p>You don’t need to know what’s wrong before you get in touch.</p><a href="#contact" className="text-link">Talk to the shop<IconArrowUpRight size={18} /></a></div>
