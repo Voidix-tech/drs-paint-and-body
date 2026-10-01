@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Hero } from "@/components/hero";
-import { IconArrowUpRight, IconMapPin, IconPhone, IconArrowRight, IconTools } from "@tabler/icons-react";
+import { IconArrowUpRight, IconMapPin, IconPhone, IconArrowRight, IconTools, IconMessageCircle, IconSettings, IconCalendarWeek } from "@tabler/icons-react";
 import { getPublicContent as publicContent } from "@/lib/public-content";
 import { BUSINESS } from "@/lib/types";
 import { Contact } from "@/components/contact";
@@ -50,18 +50,20 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
       <div className="work-heading"><p className="eyebrow work-eyebrow">Project galleries</p><h2 id="work-title">Every vehicle<br /><span>has a story<span className="services-period">.</span></span></h2><p>Take a closer look at the bodywork, paint, and repairs in our project galleries.</p></div>
       <WorkGrid items={repairWork.slice(0, 3)} services={services} carousel />
     </div></section>
-    <section className="section process-section"><div className="container process-layout">
-      <div className="section-heading"><h2>Let’s take the<br />next step together.</h2><p>You don’t need to know what’s wrong before you get in touch.</p><a href="#contact" className="text-link">Talk to the shop<IconArrowUpRight size={18} /></a></div>
+    <div className="journey-shell">
+    <section className="section process-section" aria-labelledby="process-title"><div className="container process-layout">
+      <div className="section-heading process-intro"><p className="eyebrow process-eyebrow">Get started</p><h2 id="process-title">Let’s take the<br />next step together<span className="services-period">.</span></h2><p>You don’t need to know what’s wrong before you get in touch.<br />Give us a call or leave your details — we’ll take it from there.</p><a href="#contact" className="button process-button">Talk to the shop<IconArrowUpRight size={19} aria-hidden="true" /></a></div>
       <ol className="process-list">
-        <li><span>01</span><div><h3>Tell us what happened</h3><p>Give us a call or leave your details. A year, make, model, and a few words are a good start.</p></div></li>
-        <li><span>02</span><div><h3>Talk through the options</h3><p>Discuss the work your vehicle needs and confirm the next steps with the shop.</p></div></li>
-        <li><span>03</span><div><h3>Plan your visit</h3><p>Arrange a time to bring your vehicle to our shop on Jackson Street in Suffolk.</p></div></li>
+        <li><span className="process-number">01</span><IconMessageCircle className="process-icon" size={36} stroke={1.5} aria-hidden="true" /><div><h3>Tell us what happened</h3><p>Give us a call or leave your details. A year, make, model, and a few words are a good start.</p></div></li>
+        <li><span className="process-number">02</span><IconSettings className="process-icon" size={36} stroke={1.5} aria-hidden="true" /><div><h3>Talk through the options</h3><p>Discuss the work your vehicle needs and confirm the next steps with the shop.</p></div></li>
+        <li><span className="process-number">03</span><IconCalendarWeek className="process-icon" size={36} stroke={1.5} aria-hidden="true" /><div><h3>Plan your visit</h3><p>Arrange a time to bring your vehicle to our shop on Jackson Street in Suffolk.</p></div></li>
       </ol>
     </div></section>
     {vehicle && <section className="section showroom-section"><div className="container showroom-feature">
-      <div className="showroom-feature-photo"><img src={vehicle.images[0]} alt={vehicle.title} width="1000" height="650" loading="lazy" /></div>
-      <div className="showroom-feature-copy"><p className="eyebrow">The virtual showroom</p><h2>Your next<br />set of keys.</h2><p>A new chapter starts with the right vehicle. Browse the showroom, then call to ask about the details.</p><Link className="button secondary" href="/showroom">Browse showroom<IconArrowUpRight size={18} /></Link><p className="demo-label">Demo vehicles shown for illustration.</p></div>
+      <div className="showroom-feature-photo"><img src={vehicle.images[0] === "/images/sales-1.webp" ? "/images/showroom-sunset.webp" : vehicle.images[0]} alt={vehicle.title} width="1536" height="1024" loading="lazy" /></div>
+      <div className="showroom-feature-copy"><p className="eyebrow">The virtual showroom</p><h2>Your next<br />set of keys<span className="services-period">.</span></h2><p>A new chapter starts with the right vehicle. Browse the showroom, then call to ask about the details.</p><Link className="button showroom-button" href="/showroom">Browse showroom<IconArrowUpRight size={18} aria-hidden="true" /></Link><p className="demo-label">Demo vehicles shown for illustration.</p></div>
     </div></section>}
+    </div>
     <Contact services={services} selectedService={services.some(s => s.id === query.service) ? query.service : undefined} vehicle={query.vehicle?.slice(0, 120)} />
   </>;
 }
