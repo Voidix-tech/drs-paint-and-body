@@ -2,13 +2,19 @@
 
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { IconArrowUpRight, IconX, IconChevronLeft, IconChevronRight, IconSearch } from "@tabler/icons-react";
+import { IconArrowUpRight, IconArrowRight, IconX, IconChevronLeft, IconChevronRight, IconSearch } from "@tabler/icons-react";
 import type { Work, Service } from "@/lib/types";
 import { InquiryForm } from "./contact";
 import Link from "next/link";
 import { OverlapCarousel } from "./overlap-carousel";
 
 export const money = (value?: number) => value === undefined ? "Ask for price" : new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(value);
+
+const showroomDemoPhotos: Record<string, string> = {
+  "/images/sales-1.webp": "/images/showroom-sunset.webp",
+  "/images/sales-2.webp": "/images/showroom-camry-sunset.webp",
+  "/images/sales-3.webp": "/images/showroom-ford-sunset.webp",
+};
 
 export function WorkGrid({ items, services, showroom = false, carousel = false }: { items: Work[]; services: Service[]; showroom?: boolean; carousel?: boolean }) {
   const dialog = useRef<HTMLDialogElement>(null);
@@ -29,8 +35,8 @@ export function WorkGrid({ items, services, showroom = false, carousel = false }
     title: item.title,
     content: <article key={item.id} className={carousel ? "work-card work-carousel-card" : "work-card"}>
       <button className="image-button" onClick={() => open(item)} aria-label={`View ${item.title}`}>
-        <img src={item.images[0]} alt={item.title} loading="lazy" width="900" height="600" />
-        {!carousel && <span className="image-arrow"><IconArrowUpRight size={23} /></span>}
+        <img src={showroom && item.demo ? showroomDemoPhotos[item.images[0]] || item.images[0] : item.images[0]} alt={item.title} loading="lazy" width="900" height="600" />
+        {!carousel && !showroom && <span className="image-arrow"><IconArrowUpRight size={23} /></span>}
       </button>
       <div className="work-card-info">
         {carousel && <span className="work-card-index"><span aria-hidden="true" />{String(position + 1).padStart(2, "0")}</span>}
@@ -40,6 +46,7 @@ export function WorkGrid({ items, services, showroom = false, carousel = false }
         {carousel && <p className="work-card-description">{item.description.split(".")[0]}.</p>}
         {!showroom && !carousel && item.customerLabel && <p className="project-meta">{item.customerLabel}</p>}
         {item.demo && <p className="demo-label">{showroom ? "Demo listing, not actual inventory" : "Illustrative demo photo"}</p>}
+        {showroom && <button type="button" className="vehicle-card-arrow" onClick={() => open(item)} aria-label={`View ${item.title} details`}><IconArrowRight size={21} aria-hidden="true" /></button>}
         {carousel && <button type="button" className="work-card-arrow" onClick={() => open(item)} aria-label={`Open ${item.title} gallery`}><IconArrowUpRight size={22} aria-hidden="true" /></button>}
       </div>
     </article>,
@@ -142,7 +149,7 @@ export function WorkGrid({ items, services, showroom = false, carousel = false }
     </div>}
     {carousel && !showroom
       ? <OverlapCarousel label="Project galleries" variant="projects" initialIndex={Math.min(1, projectCards.length - 1)} slides={projectCards}
-          footerStart={<Link href="/services" className="text-link work-carousel-more">Explore all services<IconArrowUpRight size={18} aria-hidden="true" /></Link>} />
+          footerStart={<Link href="/#services" className="text-link work-carousel-more">Explore all services<IconArrowUpRight size={18} aria-hidden="true" /></Link>} />
       : <div className={showroom ? "work-grid vehicle-grid" : "work-grid"}>{projectCards.map(card => card.content)}</div>}
     {items.length === 0 && <div className="empty-state"><h3>{showroom ? "More vehicles coming soon." : "More work coming soon."}</h3><p>Contact the shop to discuss {showroom ? "current availability" : "your vehicle"}.</p></div>}
     {showroom && items.length > 0 && visibleItems.length === 0 && <div className="empty-state"><h3>No vehicles match your search.</h3><p>Try a different vehicle name or show all vehicles.</p><button type="button" className="button secondary" onClick={() => { setSearch(""); setAvailability("all"); }}>Clear filters</button></div>}

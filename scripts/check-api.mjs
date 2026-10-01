@@ -95,9 +95,10 @@ try {
     (await request(`services/${service.id}?admin=1`)).coverImage === media.url,
     "Service cover survives reload",
   );
+  const servicesRoute = await fetch(`${base}/services`, { redirect: "manual" });
   check(
-    (await (await fetch(`${base}/services`)).text()).includes(media.url),
-    "Selected service cover renders on services page",
+    servicesRoute.status === 307 && servicesRoute.headers.get("location") === "/#services",
+    "Services listing redirects to home section",
   );
   check(
     (await (await fetch(`${base}/`)).text()).includes(media.url),
@@ -229,7 +230,6 @@ try {
   );
   for (const route of [
     "/",
-    "/services",
     "/services/autobody",
     "/services/collision-repair",
     "/services/painting",

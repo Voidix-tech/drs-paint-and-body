@@ -14,6 +14,21 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
   const showroomIds = new Set(services.filter(s => s.type === "showroom").map(s => s.id));
   const repairWork = work.filter(w => !showroomIds.has(w.serviceId));
   const vehicle = work.find(w => showroomIds.has(w.serviceId));
+  const serviceSlides = services.map((service, index) => {
+    const photo = service.coverImage || work.find(w => w.serviceId === service.id)?.images[0];
+    const bannerPhoto = service.type === "showroom" && photo === "/images/sales-1.webp" ? "/images/hero-corvette.webp" : photo;
+    const featured = service.slug === "wheelchair-lift-repair";
+    return { id: String(service.id), title: service.title, featured, content: <Link className={`service-tile${featured ? " service-tile-reverse service-tile-featured" : ""}`} data-service={service.slug} href={`/services/${service.slug}`}>
+      <div className="service-tile-photo">{bannerPhoto && <img src={bannerPhoto} alt="" loading="lazy" width="1600" height="900" />}</div>
+      <div className="service-tile-copy">
+        <span className="service-number">{String(index + 1).padStart(2, "0")}</span>
+        {featured && <span className="service-feature-label">Specialist lift repair</span>}
+        <h3>{service.title}</h3>
+        <p>{service.description.split(".")[0]}.</p>
+        <div className="service-tile-footer"><span className="service-tile-link">{service.type === "showroom" ? "Browse vehicles" : "Explore service"}<IconArrowRight size={16} aria-hidden="true" /></span><span className="service-tile-arrow" aria-hidden="true"><IconArrowUpRight size={21} /></span></div>
+      </div>
+    </Link> };
+  });
 
   return <>
     <Hero />
@@ -29,21 +44,11 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
           <h2 id="services-title">A little damage.<br /><span>A lot of possibilities<span className="services-period">.</span></span></h2>
           <p className="services-lead">Find the right help for your vehicle, all in one place.</p>
           <p className="services-description">From minor repairs to fresh paint, we’re here to help get your vehicle back on the road.</p>
-          <Link href="/services" className="button services-button">Explore all services<IconArrowRight size={19} aria-hidden="true" /></Link>
+          <Link href="#contact" className="button services-button">Ask about your vehicle<IconArrowRight size={19} aria-hidden="true" /></Link>
         </div>
-        <OverlapCarousel label="Services" variant="services" slides={services.map((service, index) => {
-        const photo = service.coverImage || work.find(w => w.serviceId === service.id)?.images[0];
-        const bannerPhoto = service.type === "showroom" && photo === "/images/sales-1.webp" ? "/images/hero-corvette.webp" : photo;
-        return { id: String(service.id), title: service.title, content: <Link className={`service-tile${service.slug === "wheelchair-lift-repair" ? " service-tile-reverse" : ""}`} data-service={service.slug} href={`/services/${service.slug}`}>
-          <div className="service-tile-photo">{bannerPhoto && <img src={bannerPhoto} alt="" loading="lazy" width="1600" height="900" />}</div>
-          <div className="service-tile-copy">
-            <span className="service-number">{String(index + 1).padStart(2, "0")}</span>
-            <h3>{service.title}</h3>
-            <p>{service.description.split(".")[0]}.</p>
-            <div className="service-tile-footer"><span className="service-tile-link">{service.type === "showroom" ? "Browse vehicles" : "Explore service"}<IconArrowRight size={16} aria-hidden="true" /></span><span className="service-tile-arrow" aria-hidden="true"><IconArrowUpRight size={21} /></span></div>
-          </div>
-        </Link> };
-      })} /></div>
+        <div className="services-grid">{serviceSlides.map(slide => <div key={slide.id} className={slide.featured ? "service-grid-card service-grid-card--featured" : "service-grid-card"}>{slide.content}</div>)}</div>
+        <div className="services-mobile-carousel"><OverlapCarousel label="Services" variant="services" slides={serviceSlides} /></div>
+      </div>
       {services.length === 0 && <div className="empty-state"><h3>Start with a conversation.</h3><p>Call {BUSINESS.phone} to ask about your vehicle.</p></div>}
     </div></section>
     <section id="work" className="section work-section" aria-labelledby="work-title"><div className="container">

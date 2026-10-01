@@ -28,9 +28,9 @@ Without a URL, the demo saves content in ignored `.demo/content.json`. Local fil
 
 No authentication is included, as requested. The development server binds to loopback. Add authentication before exposing the CMS or customer inquiries publicly. Generated photos, vehicles, prices, and mileage are marked as illustrative demo content. No reviews, opening hours, certifications, warranties, or real inventory claims were invented.
 
-## Cinematic hero
+## Public pages
 
-Place the generated intro and optional matching headlights-only idle loop in `public/videos/`. Set `NEXT_PUBLIC_HERO_VIDEO_URL=/videos/hero-intro.mp4` and `NEXT_PUBLIC_HERO_IDLE_VIDEO_URL=/videos/hero-idle.mp4` in `.env.local`, then restart/rebuild. The transformation intro plays once, GSAP reveals the headline and buttons at its end, and the optional idle clip loops. The final intro frame stays visible until the idle clip starts. Reduced-motion visitors get the still photo. The generated video files are still awaiting delivery; the current photo remains the fallback.
+The homepage contains the hero, services, project galleries, visit steps, and contact form. `/services` redirects to the homepage services section; individual service detail pages remain available. The showroom at `/showroom` displays illustrative demo listings with filters and search.
 
 ## Verification
 

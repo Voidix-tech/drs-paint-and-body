@@ -8,7 +8,7 @@ import { IconArrowUpRight, IconPhone, IconMenu2, IconX, IconBrandFacebook, IconM
 import { BUSINESS, type Service } from "@/lib/types";
 import { InquiryForm } from "@/components/contact";
 
-const navigation = [["Home", "/"], ["Services", "/services"], ["Showroom", "/showroom"], ["Contact", "#contact"]];
+const navigation = [["Home", "/"], ["Services", "/#services"], ["Showroom", "/showroom"], ["Contact", "#contact"]];
 
 export function Header({ services }: { services: Service[] }) {
   const pathname = usePathname();
@@ -78,7 +78,7 @@ export function Header({ services }: { services: Service[] }) {
   }
 
   function navigationLink([label, href]: string[]) {
-    const active = href === "/" ? pathname === "/" : !href.includes("#") && pathname.startsWith(href);
+    const active = href === "/" ? pathname === "/" : href === "/#services" ? pathname.startsWith("/services/") : !href.includes("#") && pathname.startsWith(href);
     return <Link key={href} href={href} className={active ? "active" : ""} aria-current={active ? "page" : undefined} onClick={() => navigate(href)}>{label}</Link>;
   }
 
@@ -118,7 +118,7 @@ export function Footer() {
         <a href={BUSINESS.directions} target="_blank" rel="noreferrer"><IconMapPin size={18} />{BUSINESS.address}<IconArrowUpRight size={15} /></a>
         <a href={BUSINESS.facebook} target="_blank" rel="noreferrer"><IconBrandFacebook size={18} />Find us on Facebook<IconArrowUpRight size={15} /></a>
       </div>
-      <nav className="footer-nav" aria-label="Footer"><Link href="/">Home</Link><Link href="/services">Services</Link><Link href="/showroom">Showroom</Link><Link href="/#contact">Contact</Link></nav>
+      <nav className="footer-nav" aria-label="Footer"><Link href="/">Home</Link><Link href="/#services">Services</Link><Link href="/showroom">Showroom</Link><Link href="/#contact">Contact</Link></nav>
     </div>
     <div className="container footer-bottom">
       <span>© {new Date().getFullYear()} DR’s Paint and Body</span>

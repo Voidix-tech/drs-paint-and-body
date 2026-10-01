@@ -13,7 +13,7 @@ export function Hero() {
         <p className="hero-noir-description">Bodywork, paint, and repairs from your local Suffolk shop. Tell us what your vehicle needs.</p>
         <div className="hero-noir-actions">
           <a href="#contact" className="button primary"><span>Request a callback</span><IconArrowRight size={26} aria-hidden="true" /></a>
-          <Link href="/services" className="button hero-noir-secondary"><span>Explore services</span><IconArrowRight size={26} aria-hidden="true" /></Link>
+          <Link href="/#services" className="button hero-noir-secondary"><span>Explore services</span><IconArrowRight size={26} aria-hidden="true" /></Link>
         </div>
       </div>
     </div>

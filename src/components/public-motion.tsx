@@ -22,7 +22,7 @@ export function PublicMotion({ children }: { children: React.ReactNode }) {
         observer.unobserve(entry.target);
       });
     }, { threshold: 0.05 });
-    root.current.querySelectorAll(".section-heading, .service-tile, .work-card, .contact-form, .service-gallery-grid > article").forEach(element => observer.observe(element));
+    root.current.querySelectorAll(".section-heading, .service-tile, .work-card, .contact-form").forEach(element => observer.observe(element));
     const reduce = () => {
       if (media.matches) { observer.disconnect(); animations.forEach(animation => animation.cancel()); }
     };
