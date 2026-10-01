@@ -21,14 +21,26 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
       <div className="location-strip-item"><span className="location-strip-icon" aria-hidden="true"><IconTools size={32} /></span><span><small>Paint. Bodywork. Repairs.</small><strong>One local shop.</strong></span></div>
       <a className="location-strip-item" href={`tel:${BUSINESS.tel}`}><span className="location-strip-icon" aria-hidden="true"><IconPhone size={32} /></span><span><small>Let’s talk about your vehicle</small><strong>{BUSINESS.phone}</strong></span></a>
     </div></div>
-    <section className="section services-section"><div className="container">
-      <div className="section-heading"><h2>A little damage.<br />A lot of possibilities.</h2><p>Find the right help for your vehicle, all in one place.</p></div>
-      <div className="service-list">{services.map((service, index) => {
+    <section id="services" className="section services-section" aria-labelledby="services-title"><div className="container">
+      <div className="service-list">
+        <div className="services-intro">
+          <p className="eyebrow services-eyebrow">Our services</p>
+          <h2 id="services-title">A little damage.<br /><span>A lot of possibilities<span className="services-period">.</span></span></h2>
+          <p className="services-lead">Find the right help for your vehicle, all in one place.</p>
+          <p className="services-description">From minor repairs to fresh paint, we’re here to help get your vehicle back on the road.</p>
+          <Link href="/services" className="button services-button">Explore all services<IconArrowRight size={19} aria-hidden="true" /></Link>
+        </div>
+        {services.map((service, index) => {
         const photo = service.coverImage || work.find(w => w.serviceId === service.id)?.images[0];
-        return <Link className="service-tile" key={service.id} href={`/services/${service.slug}`}>
-          <div className="service-tile-photo">{photo && <img src={photo} alt="" loading="lazy" width="240" height="180" />}</div>
-          <div className="service-tile-copy"><span className="service-number">{String(index + 1).padStart(2, "0")}</span><h3>{service.title}</h3><p>{service.description.split(".")[0]}.</p><span className="service-tile-link">{service.type === "showroom" ? "Browse vehicles" : "Explore service"}<IconArrowRight size={16} /></span></div>
-          <IconArrowUpRight className="service-tile-arrow" size={23} />
+        const bannerPhoto = service.type === "showroom" && photo === "/images/sales-1.webp" ? "/images/hero-corvette.webp" : photo;
+        return <Link className={`service-tile${service.slug === "wheelchair-lift-repair" ? " service-tile-reverse" : ""}`} data-service={service.slug} key={service.id} href={`/services/${service.slug}`}>
+          <div className="service-tile-photo">{bannerPhoto && <img src={bannerPhoto} alt="" loading="lazy" width="1600" height="900" />}</div>
+          <div className="service-tile-copy">
+            <span className="service-number">{String(index + 1).padStart(2, "0")}</span>
+            <h3>{service.title}</h3>
+            <p>{service.description.split(".")[0]}.</p>
+            <div className="service-tile-footer"><span className="service-tile-link">{service.type === "showroom" ? "Browse vehicles" : "Explore service"}<IconArrowRight size={16} aria-hidden="true" /></span><span className="service-tile-arrow" aria-hidden="true"><IconArrowUpRight size={21} /></span></div>
+          </div>
         </Link>;
       })}</div>
       {services.length === 0 && <div className="empty-state"><h3>Start with a conversation.</h3><p>Call {BUSINESS.phone} to ask about your vehicle.</p></div>}
