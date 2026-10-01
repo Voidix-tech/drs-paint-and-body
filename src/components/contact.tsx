@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { IconArrowUpRight, IconPhone, IconMapPin, IconCheck } from "@tabler/icons-react";
+import { IconArrowUpRight, IconPhone, IconMapPin, IconCheck, IconClock } from "@tabler/icons-react";
 import { BUSINESS, type Service } from "@/lib/types";
 
-export function InquiryForm({ services, selectedService, vehicle, initialMessage, heading = "Request a callback" }: { services: Service[]; selectedService?: string; vehicle?: string; initialMessage?: string; heading?: string }) {
+export function InquiryForm({ services, selectedService, vehicle, initialMessage, heading = "Request a callback", featured = false }: { services: Service[]; selectedService?: string; vehicle?: string; initialMessage?: string; heading?: string; featured?: boolean }) {
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [sent, setSent] = useState(false);
@@ -30,13 +30,13 @@ export function InquiryForm({ services, selectedService, vehicle, initialMessage
     } finally { setBusy(false); }
   }
 
-  return <div className="contact-form-wrap">
+  return <div className={`contact-form-wrap${featured ? " contact-form-featured" : ""}`}>
         {sent ? <div ref={status} className="success-panel" role="status" tabIndex={-1}>
           <IconCheck size={42} /><h3>Message received.</h3>
           <p>Your inquiry is saved. If you need to speak with someone now, call {BUSINESS.phone}.</p>
           <button type="button" className="button secondary" onClick={() => setSent(false)}>Send another inquiry<IconArrowUpRight size={17} /></button>
         </div> : <form onSubmit={submit} className="contact-form" aria-busy={busy}>
-          <h3>{heading}</h3>
+          <div className="form-heading-row"><h3>{heading}</h3>{featured && <span className="form-response-note"><IconClock size={22} aria-hidden="true" />We’ll follow up with you</span>}</div>
           <p className="form-intro">A few details are all we need to get started. All fields are required except email.</p>
           <div className="form-row">
             <label>Your name<input name="name" autoComplete="name" required maxLength={100} placeholder="First and last name" /></label>
@@ -56,12 +56,12 @@ export function InquiryForm({ services, selectedService, vehicle, initialMessage
 export function Contact({ services, selectedService, vehicle }: { services: Service[]; selectedService?: string; vehicle?: string }) {
   return <section id="contact" className="contact-section section"><div className="container contact-grid">
     <div className="contact-copy">
-      <h2>Let’s get you{" "}<br /><span>back on the road.</span></h2>
+      <p className="eyebrow contact-eyebrow">Get in touch</p>
+      <h2>Let’s get you{" "}<br /><span>back on the road<span className="services-period">.</span></span></h2>
       <p>Tell us about your vehicle and what you need. We’ll have your details ready for a conversation.</p>
-      <a className="contact-phone" href={`tel:${BUSINESS.tel}`}><IconPhone size={26} />{BUSINESS.phone}<IconArrowUpRight size={22} /></a>
-      <a className="address-link" href={BUSINESS.directions} target="_blank" rel="noreferrer"><IconMapPin size={21} /><span>220 Jackson St<br />Suffolk, VA 23434</span><IconArrowUpRight size={18} /></a>
-      <p className="contact-note">Prefer to talk it through? Give us a call.</p>
+      <a className="contact-phone" href={`tel:${BUSINESS.tel}`}><span className="contact-method-icon"><IconPhone size={26} aria-hidden="true" /></span><span className="contact-method-text"><small>Call us</small><strong>{BUSINESS.phone}</strong></span><IconArrowUpRight size={19} aria-hidden="true" /></a>
+      <a className="address-link" href={BUSINESS.directions} target="_blank" rel="noreferrer"><span className="contact-method-icon"><IconMapPin size={26} aria-hidden="true" /></span><span className="contact-method-text"><small>Visit our shop</small><span>220 Jackson St<br />Suffolk, VA 23434</span></span><IconArrowUpRight size={19} aria-hidden="true" /></a>
     </div>
-    <InquiryForm services={services} selectedService={selectedService} vehicle={vehicle} />
+    <InquiryForm services={services} selectedService={selectedService} vehicle={vehicle} featured />
   </div></section>;
 }

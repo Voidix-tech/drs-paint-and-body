@@ -118,6 +118,7 @@ export function Footer() {
         <a href={BUSINESS.directions} target="_blank" rel="noreferrer"><IconMapPin size={18} />{BUSINESS.address}<IconArrowUpRight size={15} /></a>
         <a href={BUSINESS.facebook} target="_blank" rel="noreferrer"><IconBrandFacebook size={18} />Find us on Facebook<IconArrowUpRight size={15} /></a>
       </div>
+      <nav className="footer-nav" aria-label="Footer"><Link href="/">Home</Link><Link href="/services">Services</Link><Link href="/showroom">Showroom</Link><Link href="/#contact">Contact</Link></nav>
     </div>
     <div className="container footer-bottom">
       <span>© {new Date().getFullYear()} DR’s Paint and Body</span>
